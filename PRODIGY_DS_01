@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the data
+df = pd.read_csv('data.csv')
+
+# Drop missing income group values
+df_clean = df.dropna(subset=['IncomeGroup'])
+
+# Count countries per income group
+income_counts = df_clean['IncomeGroup'].value_counts().reset_index()
+income_counts.columns = ['Income Group', 'Number of Countries']
+
+# Plot
+plt.figure(figsize=(8,6))
+sns.barplot(x='Income Group', y='Number of Countries', data=income_counts, palette='Set2')
+plt.title('Distribution of Countries by Income Group')
+plt.ylabel('Number of Countries')
+plt.xticks(rotation=20)
+plt.tight_layout()
+plt.savefig("income_group_distribution.png")
+plt.show()
